@@ -7,9 +7,10 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ProjectDetailDrawer } from './components/ProjectDetailDrawer';
 import { SunCursorFollower } from './components/SunCursorFollower';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { Project } from './types/portfolio';
 
-export function App() {
+function AppContent() {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('portfolio-theme');
@@ -50,6 +51,14 @@ export function App() {
         onClose={() => setSelectedProject(null)}
       />
     </div>
+  );
+}
+
+export function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }
 
