@@ -54,7 +54,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   };
 
   return (
-    <div ref={containerRef} className={`relative inline-block text-left ${className}`}>
+    <div ref={containerRef} className={`relative inline-block text-left shrink-0 ${className}`}>
       {/* Trigger Button */}
       <button
         ref={triggerRef}
@@ -64,14 +64,14 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
         aria-haspopup="listbox"
         aria-label={`${t.languageSelector.selectLanguage}. ${t.languageSelector.currentLanguage} ${currentOption.name}`}
         title={`${t.languageSelector.currentLanguage} ${currentOption.name}`}
-        className="h-10 px-2.5 sm:px-3 rounded-xl border border-surface-border-light dark:border-surface-border-dark bg-surface-light/80 dark:bg-surface-dark/80 hover:border-sunset-amber/40 dark:hover:border-sunset-gold/40 text-text-light-primary dark:text-text-dark-primary transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sunset-amber flex items-center gap-1.5 cursor-pointer shadow-xs font-mono text-xs sm:text-sm font-semibold select-none"
+        className="h-10 w-10 sm:w-auto px-0 sm:px-3 rounded-xl border border-surface-border-light dark:border-surface-border-dark bg-surface-light/80 dark:bg-surface-dark/80 hover:border-sunset-amber/40 dark:hover:border-sunset-gold/40 text-text-light-primary dark:text-text-dark-primary transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sunset-amber flex items-center justify-center sm:justify-start gap-1.5 cursor-pointer shadow-xs font-mono text-xs sm:text-sm font-semibold select-none shrink-0"
       >
         <span className="text-base leading-none" role="img" aria-label={currentOption.name}>
           {currentOption.flag}
         </span>
-        <span className="tracking-wide font-bold">{currentOption.label}</span>
+        <span className="hidden sm:inline tracking-wide font-bold">{currentOption.label}</span>
         <ChevronDown
-          className={`w-3.5 h-3.5 text-text-light-secondary dark:text-text-dark-secondary transition-transform duration-200 ${
+          className={`hidden sm:block w-3.5 h-3.5 text-text-light-secondary dark:text-text-dark-secondary transition-transform duration-200 ${
             isOpen ? 'rotate-180 text-sunset-amber' : ''
           }`}
           aria-hidden="true"
