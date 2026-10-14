@@ -1,6 +1,7 @@
 import React from 'react';
 import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
 import { authorProfile } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
 
 export interface FooterProps {
   githubUrl?: string;
@@ -13,6 +14,7 @@ export const Footer: React.FC<FooterProps> = ({
   linkedinUrl = 'https://linkedin.com/in/matheus-abella',
   email = authorProfile.email || 'mtsa.dev@gmail.com',
 }) => {
+  const { language, t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
@@ -32,14 +34,18 @@ export const Footer: React.FC<FooterProps> = ({
               Matheus "Lekod" Abella · TSA Tech
             </span>
             <p className="text-xs text-text-light-secondary dark:text-text-dark-secondary">
-              © {currentYear} Todos os direitos reservados.
+              © {currentYear} {t.footer.rights}
             </p>
           </div>
 
           {/* Tech Stack credits */}
           <div className="text-center">
             <p className="text-xs font-mono text-text-light-secondary dark:text-text-dark-secondary">
-              Construído com React, TypeScript & Tailwind CSS
+              {language === 'en'
+                ? 'Built with React, TypeScript & Tailwind CSS'
+                : language === 'es'
+                ? 'Construido con React, TypeScript y Tailwind CSS'
+                : 'Construído com React, TypeScript & Tailwind CSS'}
             </p>
           </div>
 
@@ -76,9 +82,9 @@ export const Footer: React.FC<FooterProps> = ({
             <button
               type="button"
               onClick={scrollToTop}
-              aria-label="Voltar ao topo da página"
+              aria-label={t.footer.backToTop}
               className="p-2 rounded-xl text-text-light-secondary hover:text-text-light-primary dark:text-text-dark-secondary dark:hover:text-text-dark-primary bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sunset-amber ml-2"
-              title="Voltar ao topo"
+              title={t.footer.backToTop}
             >
               <ArrowUp className="w-4 h-4" aria-hidden="true" />
             </button>

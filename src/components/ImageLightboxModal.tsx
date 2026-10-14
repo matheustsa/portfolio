@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ChevronLeft, ChevronRight, ImageIcon } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export interface ImageLightboxModalProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({
   subtitle,
   onClose,
 }) => {
+  const { t } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   useEffect(() => {
@@ -113,7 +115,7 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                aria-label="Fechar visualização ampliada (Escape)"
+                aria-label={t.lightbox.close}
                 className="p-2 sm:p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white backdrop-blur-md border border-white/20 transition-all cursor-pointer shadow-lg focus:outline-hidden focus:ring-2 focus:ring-sunset-amber"
               >
                 <X className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
@@ -127,7 +129,7 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({
               <motion.img
                 key={currentImage}
                 src={currentImage}
-                alt={title ? `${title} - Imagem ${currentIndex + 1}` : 'Imagem ampliada'}
+                alt={title ? `${title} - ${currentIndex + 1}` : 'Image'}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
@@ -143,7 +145,7 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({
               <button
                 type="button"
                 onClick={handlePrev}
-                aria-label="Imagem anterior (Seta esquerda)"
+                aria-label={t.lightbox.previous}
                 className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/60 hover:bg-black/90 text-white/90 hover:text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all opacity-85 hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer shadow-xl focus:outline-hidden focus:ring-2 focus:ring-sunset-amber"
               >
                 <ChevronLeft className="w-6 h-6" aria-hidden="true" />
@@ -151,7 +153,7 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({
               <button
                 type="button"
                 onClick={handleNext}
-                aria-label="Próxima imagem (Seta direita)"
+                aria-label={t.lightbox.next}
                 className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/60 hover:bg-black/90 text-white/90 hover:text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all opacity-85 hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer shadow-xl focus:outline-hidden focus:ring-2 focus:ring-sunset-amber"
               >
                 <ChevronRight className="w-6 h-6" aria-hidden="true" />

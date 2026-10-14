@@ -11,6 +11,7 @@ import {
   MessageSquare,
 } from 'lucide-react';
 import { authorProfile } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
 
 export interface ContactSectionProps {
   email?: string;
@@ -23,6 +24,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   linkedinUrl = 'https://linkedin.com/in/matheus-abella',
   githubUrl = 'https://github.com/MatheusTSA',
 }) => {
+  const { language, t } = useLanguage();
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = async () => {
@@ -74,7 +76,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-sunset-amber/10 dark:bg-sunset-amber/20 text-sunset-coral dark:text-sunset-gold border border-sunset-amber/20 mb-3"
           >
             <MessageSquare className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>Vamos Conversar</span>
+            <span>{t.contact.badge}</span>
           </motion.div>
 
           <motion.h2
@@ -84,7 +86,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             transition={{ duration: 0.4, delay: 0.08 }}
             className="text-3xl sm:text-4xl font-bold tracking-tight text-text-light-primary dark:text-text-dark-primary"
           >
-            Entre em Contato
+            {t.contact.title}
           </motion.h2>
 
           <motion.p
@@ -94,8 +96,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             transition={{ duration: 0.4, delay: 0.16 }}
             className="mt-3 text-base sm:text-lg text-text-light-secondary dark:text-text-dark-secondary leading-relaxed"
           >
-            Disponível para novos projetos, consultoria técnica e oportunidades de engenharia.
-            Escolha o canal de sua preferência.
+            {t.contact.description}
           </motion.p>
         </div>
 
@@ -122,20 +123,24 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                     aria-live="polite"
                   >
                     <Check className="w-3.5 h-3.5" aria-hidden="true" />
-                    Espero sua mensagem!
+                    {t.contact.emailCopied}
                   </span>
                 )}
               </div>
 
               <div>
                 <h3 className="text-xl font-bold tracking-tight text-text-light-primary dark:text-text-dark-primary">
-                  E-mail
+                  {language === 'es' ? 'Correo electrónico' : language === 'en' ? 'Email' : 'E-mail'}
                 </h3>
                 <p className="text-xs font-mono text-text-light-secondary/80 dark:text-text-dark-secondary/80 mt-1 truncate">
                   {email}
                 </p>
                 <p className="text-sm text-text-light-secondary dark:text-text-dark-secondary mt-3 leading-relaxed">
-                  Canal direto para propostas, detalhamento técnico e alinhamento de escopo.
+                  {language === 'en'
+                    ? 'Direct channel for proposals, technical consulting, and scope alignment.'
+                    : language === 'es'
+                    ? 'Canal directo para propuestas, consultoría técnica y alineación de alcance.'
+                    : 'Canal direto para propostas, detalhamento técnico e alinhamento de escopo.'}
                 </p>
               </div>
             </div>
@@ -145,17 +150,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 type="button"
                 onClick={handleCopyEmail}
                 className="w-full sm:flex-1 h-11 inline-flex items-center justify-center gap-2 px-2 rounded-xl text-sm font-semibold bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-text-light-primary dark:text-text-dark-primary border border-surface-border-light dark:border-surface-border-dark transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sunset-amber"
-                aria-label={copied ? 'E-mail copiado' : 'Copiar endereço de e-mail'}
+                aria-label={copied ? t.contact.emailCopied : t.contact.copyEmail}
               >
                 {copied ? (
                   <>
                     <Check className="w-4 h-4 text-emerald-500 shrink-0" aria-hidden="true" />
-                    <span className="text-emerald-600 dark:text-emerald-400 font-medium">Copiado</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-medium">{t.contact.emailCopied}</span>
                   </>
                 ) : (
                   <>
                     <Copy className="w-4 h-4 text-text-light-secondary dark:text-text-dark-secondary shrink-0" aria-hidden="true" />
-                    <span>Copiar e-mail</span>
+                    <span>{t.contact.copyEmail}</span>
                   </>
                 )}
               </button>
@@ -166,7 +171,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 aria-label={`Enviar e-mail para ${email}`}
               >
                 <Send className="w-4 h-4 shrink-0" aria-hidden="true" />
-                <span>Abrir e-mail</span>
+                <span>{language === 'en' ? 'Send email' : language === 'es' ? 'Enviar correo' : 'Abrir e-mail'}</span>
               </a>
             </div>
           </motion.article>
@@ -195,7 +200,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   in/matheus-abella
                 </p>
                 <p className="text-sm text-text-light-secondary dark:text-text-dark-secondary mt-3 leading-relaxed">
-                  Conexões profissionais, histórico de carreira e atualizações sobre projetos de tecnologia.
+                  {language === 'en'
+                    ? 'Professional connections, career history, and technology project updates.'
+                    : language === 'es'
+                    ? 'Conexiones profesionales, historial de carrera y actualizaciones sobre proyectos de tecnología.'
+                    : 'Conexões profissionais, histórico de carreira e atualizações sobre projetos de tecnologia.'}
                 </p>
               </div>
             </div>
@@ -208,7 +217,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 className="w-full h-11 inline-flex items-center justify-center gap-2 px-4 rounded-xl text-sm font-semibold bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-text-light-primary dark:text-text-dark-primary border border-surface-border-light dark:border-surface-border-dark transition-all duration-200 group/link focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sunset-amber"
                 aria-label="Abrir perfil no LinkedIn em nova aba"
               >
-                <span>Conectar no LinkedIn</span>
+                <span>{language === 'en' ? 'Connect on LinkedIn' : language === 'es' ? 'Conectar en LinkedIn' : 'Conectar no LinkedIn'}</span>
                 <ArrowUpRight
                   className="w-4 h-4 text-text-light-secondary dark:text-text-dark-secondary transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 shrink-0"
                   aria-hidden="true"
@@ -241,7 +250,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   github.com/MatheusTSA
                 </p>
                 <p className="text-sm text-text-light-secondary dark:text-text-dark-secondary mt-3 leading-relaxed">
-                  Repositórios abertos, contribuições de código e arquitetura prática de sistemas.
+                  {language === 'en'
+                    ? 'Open repositories, code contributions, and practical systems architecture.'
+                    : language === 'es'
+                    ? 'Repositorios abiertos, contribuciones de código y arquitectura práctica de sistemas.'
+                    : 'Repositórios abertos, contribuições de código e arquitetura prática de sistemas.'}
                 </p>
               </div>
             </div>
@@ -254,7 +267,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 className="w-full h-11 inline-flex items-center justify-center gap-2 px-4 rounded-xl text-sm font-semibold bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-text-light-primary dark:text-text-dark-primary border border-surface-border-light dark:border-surface-border-dark transition-all duration-200 group/link focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sunset-amber"
                 aria-label="Abrir perfil no GitHub em nova aba"
               >
-                <span>Explorar no GitHub</span>
+                <span>{language === 'en' ? 'Explore on GitHub' : language === 'es' ? 'Explorar en GitHub' : 'Explorar no GitHub'}</span>
                 <ArrowUpRight
                   className="w-4 h-4 text-text-light-secondary dark:text-text-dark-secondary transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 shrink-0"
                   aria-hidden="true"
