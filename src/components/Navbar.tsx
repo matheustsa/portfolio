@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, Sunset, Sunrise, Code2 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { LanguageSelector } from './LanguageSelector';
 
 export interface NavbarProps {
   darkMode: boolean;
   setDarkMode: (value: boolean) => void;
 }
 
-const navItems = [
-  { label: 'Sobre', href: '#sobre' },
-  { label: 'Stack', href: '#stack' },
-  { label: 'Projetos', href: '#projetos' },
-  { label: 'Contato', href: '#contato' },
-];
-
 export const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
+  const { t } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [imgError, setImgError] = useState(false);
+
+  const navItems = [
+    { label: t.nav.about, href: '#sobre' },
+    { label: t.nav.stack, href: '#stack' },
+    { label: t.nav.projects, href: '#projetos' },
+    { label: t.nav.contact, href: '#contato' },
+  ];
 
   // Close mobile menu on Escape key press or window resize to desktop
   useEffect(() => {
@@ -89,22 +92,21 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
             ))}
           </nav>
 
-          {/* Right Controls: Theme Toggle, CTA Button, Mobile Toggle */}
+          {/* Right Controls: Language Selector, Theme Toggle, CTA Button, Mobile Toggle */}
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Language Selector Dropdown */}
+            <LanguageSelector />
+
             {/* Theme Toggle Button */}
             <button
               type="button"
               onClick={() => setDarkMode(!darkMode)}
               className="relative h-10 w-10 sm:w-[104px] shrink-0 rounded-xl border border-surface-border-light dark:border-surface-border-dark bg-surface-light/80 dark:bg-surface-dark/80 hover:border-sunset-amber/40 dark:hover:border-sunset-gold/40 text-text-light-primary dark:text-text-dark-primary transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sunset-amber flex items-center justify-center overflow-hidden group cursor-pointer shadow-xs"
               aria-label={
-                darkMode
-                  ? 'Alternar para tema Nascer do Sol (Claro)'
-                  : 'Alternar para tema Pôr do Sol (Escuro)'
+                darkMode ? t.theme.sunriseLight : t.theme.sunsetDark
               }
               title={
-                darkMode
-                  ? 'Tema atual: Pôr do Sol (Escuro) • Clique para Nascer do Sol (Claro)'
-                  : 'Tema atual: Nascer do Sol (Claro) • Clique para Pôr do Sol (Escuro)'
+                darkMode ? t.theme.currentSunset : t.theme.currentSunrise
               }
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -118,7 +120,9 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
                     className="flex items-center justify-center gap-1.5 text-sunset-gold w-full"
                   >
                     <Sunset className="w-5 h-5 shrink-0" aria-hidden="true" />
-                    <span className="hidden sm:inline text-xs font-mono font-semibold tracking-wide">Sunset</span>
+                    <span className="hidden sm:inline text-xs font-mono font-semibold tracking-wide">
+                      {t.theme.sunsetLabel}
+                    </span>
                   </motion.div>
                 ) : (
                   <motion.div
@@ -130,7 +134,9 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
                     className="flex items-center justify-center gap-1.5 text-sunrise-ocean w-full"
                   >
                     <Sunrise className="w-5 h-5 shrink-0" aria-hidden="true" />
-                    <span className="hidden sm:inline text-xs font-mono font-semibold tracking-wide">Sunrise</span>
+                    <span className="hidden sm:inline text-xs font-mono font-semibold tracking-wide">
+                      {t.theme.sunriseLabel}
+                    </span>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -141,7 +147,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
               href="#contato"
               className="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-sunset-amber via-sunset-coral to-sunset-crimson hover:opacity-95 shadow-md shadow-sunset-amber/20 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sunset-amber"
             >
-              Falar Comigo
+              {t.nav.cta}
             </a>
 
             {/* Mobile Hamburger Toggle */}
@@ -151,7 +157,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
               className="md:hidden p-2 rounded-xl text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sunset-amber cursor-pointer"
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-navigation-menu"
-              aria-label={isMobileMenuOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
+              aria-label={isMobileMenuOpen ? t.nav.menuClose : t.nav.menuOpen}
             >
               {isMobileMenuOpen ? (
                 <X className="w-6 h-6" aria-hidden="true" />
@@ -191,7 +197,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-sunset-amber via-sunset-coral to-sunset-crimson shadow-md text-center"
                 >
-                  Falar Comigo
+                  {t.nav.cta}
                 </a>
               </div>
             </nav>
