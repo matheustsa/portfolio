@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Briefcase, Code2, Maximize2 } from 'lucide-react';
-import { projects as defaultProjects } from '../data/portfolioData';
+import { getProjects } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
 import { Project } from '../types/portfolio';
 import { ImageLightboxModal } from './ImageLightboxModal';
 
@@ -85,9 +86,11 @@ const ProjectThumbnail: React.FC<ProjectThumbnailProps> = ({ image, title, subti
 };
 
 export const ProjectsPreviewSection: React.FC<ProjectsPreviewSectionProps> = ({
-  projects = defaultProjects,
+  projects,
   onSelectProject,
 }) => {
+  const { language, t } = useLanguage();
+  const displayProjects = projects ?? getProjects(language);
   const [lightboxProject, setLightboxProject] = useState<Project | null>(null);
 
   return (
@@ -117,7 +120,7 @@ export const ProjectsPreviewSection: React.FC<ProjectsPreviewSectionProps> = ({
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-sunset-amber/10 dark:bg-sunset-amber/20 text-sunset-coral dark:text-sunset-gold border border-sunset-amber/20 mb-3"
           >
             <Briefcase className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>Portfólio em Destaque</span>
+            <span>{t.projects.badge}</span>
           </motion.div>
 
           <motion.h2
@@ -127,7 +130,7 @@ export const ProjectsPreviewSection: React.FC<ProjectsPreviewSectionProps> = ({
             transition={{ duration: 0.4, delay: 0.08 }}
             className="text-3xl sm:text-4xl font-bold tracking-tight text-text-light-primary dark:text-text-dark-primary"
           >
-            Projetos Selecionados
+            {t.projects.title}
           </motion.h2>
 
           <motion.p
@@ -137,13 +140,13 @@ export const ProjectsPreviewSection: React.FC<ProjectsPreviewSectionProps> = ({
             transition={{ duration: 0.4, delay: 0.16 }}
             className="mt-3 text-base sm:text-lg text-text-light-secondary dark:text-text-dark-secondary leading-relaxed"
           >
-            Aplicações web e mobile construídas com foco em engenharia limpa, escalabilidade e resolução direta de gargalos reais.
+            {t.projects.subtitle}
           </motion.p>
         </div>
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-12">
-          {projects.map((project, index) => (
+          {displayProjects.map((project, index) => (
             <motion.article
               key={project.id}
               initial={{ opacity: 0, y: 24 }}
@@ -220,9 +223,9 @@ export const ProjectsPreviewSection: React.FC<ProjectsPreviewSectionProps> = ({
                   type="button"
                   onClick={() => onSelectProject(project)}
                   className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-black/5 dark:bg-white/5 hover:bg-sunset-amber hover:text-white dark:hover:bg-sunset-amber dark:hover:text-white text-text-light-primary dark:text-text-dark-primary border border-surface-border-light dark:border-surface-border-dark hover:border-transparent transition-all duration-200 cursor-pointer group/btn focus:outline-hidden focus:ring-2 focus:ring-sunset-amber"
-                  aria-label={`Ver detalhes completos do projeto ${project.title}`}
+                  aria-label={`${t.projects.viewDetails}: ${project.title}`}
                 >
-                  <span>Ver Detalhes do Projeto</span>
+                  <span>{t.projects.viewDetails}</span>
                   <ArrowRight
                     className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1"
                     aria-hidden="true"

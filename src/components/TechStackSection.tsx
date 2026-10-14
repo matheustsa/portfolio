@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Layout, Server, Smartphone, Cpu, Layers } from 'lucide-react';
-import { techCategories } from '../data/portfolioData';
+import { getTechCategories } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
 import { TechCategory } from '../types/portfolio';
 
 const categoryIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -16,8 +17,11 @@ export interface TechStackSectionProps {
 }
 
 export const TechStackSection: React.FC<TechStackSectionProps> = ({
-  categories = techCategories,
+  categories,
 }) => {
+  const { language, t } = useLanguage();
+  const displayCategories = categories ?? getTechCategories(language);
+
   return (
     <section
       id="stack"
@@ -35,7 +39,7 @@ export const TechStackSection: React.FC<TechStackSectionProps> = ({
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-sunset-amber/10 dark:bg-sunset-amber/20 text-sunset-coral dark:text-sunset-gold border border-sunset-amber/20 mb-3"
           >
             <Layers className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>Stack Tecnológica</span>
+            <span>{t.techStack.badge}</span>
           </motion.div>
 
           <motion.h2
@@ -45,7 +49,7 @@ export const TechStackSection: React.FC<TechStackSectionProps> = ({
             transition={{ duration: 0.4, delay: 0.08 }}
             className="text-3xl sm:text-4xl font-bold tracking-tight text-text-light-primary dark:text-text-dark-primary"
           >
-            Tecnologias & Ferramentas
+            {t.techStack.title}
           </motion.h2>
 
           <motion.p
@@ -55,13 +59,13 @@ export const TechStackSection: React.FC<TechStackSectionProps> = ({
             transition={{ duration: 0.4, delay: 0.16 }}
             className="mt-3 text-base sm:text-lg text-text-light-secondary dark:text-text-dark-secondary"
           >
-            Conjunto técnico aplicado no desenvolvimento de sistemas distribuídos, aplicações móveis e interfaces modernas.
+            {t.techStack.description}
           </motion.p>
         </div>
 
         {/* Categorized Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-          {categories.map((category, index) => {
+          {displayCategories.map((category, index) => {
             const IconComponent = categoryIconMap[category.icon] || Layers;
 
             return (

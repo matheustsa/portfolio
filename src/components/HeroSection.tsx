@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowDown, Mail, Github, Linkedin, Terminal, User } from 'lucide-react';
-import { authorProfile } from '../data/portfolioData';
+import { getAuthorProfile } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
 
 export interface HeroSectionProps {
   onContactClick?: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
+  const { language, t } = useLanguage();
+  const authorProfile = getAuthorProfile(language);
   const [imgError, setImgError] = useState(false);
 
   return (
@@ -52,7 +55,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
               className="space-y-3"
             >
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-text-light-primary dark:text-text-dark-primary leading-[1.1]">
-                <span>Olá, me chamo </span>
+                <span>{t.hero.greeting} </span>
                 <span className="inline-block text-sunrise-ocean dark:text-sunset-amber">
                   {authorProfile.name}
                 </span>
@@ -83,7 +86,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
                 href="#projetos"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-sunset-amber via-sunset-coral to-sunset-crimson hover:opacity-95 shadow-lg shadow-sunset-amber/20 hover:shadow-xl hover:shadow-sunset-amber/30 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sunset-amber text-sm sm:text-base cursor-pointer"
               >
-                <span>Explorar Projetos</span>
+                <span>{t.hero.viewProjects}</span>
                 <ArrowDown className="w-4 h-4" aria-hidden="true" />
               </a>
 
@@ -92,7 +95,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
                 onClick={onContactClick}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-text-light-primary dark:text-text-dark-primary bg-surface-light dark:bg-surface-dark border border-surface-border-light dark:border-surface-border-dark hover:border-sunset-amber/50 dark:hover:border-sunset-gold/50 hover:bg-black/5 dark:hover:bg-white/5 shadow-xs hover:shadow-md transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sunset-amber text-sm sm:text-base cursor-pointer"
               >
-                <span>Entrar em Contato</span>
+                <span>{t.hero.contactMe}</span>
                 <Mail className="w-4 h-4 text-sunset-coral dark:text-sunset-gold" aria-hidden="true" />
               </a>
             </motion.div>
@@ -105,7 +108,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
               className="flex items-center gap-3 pt-4 border-t border-surface-border-light dark:border-surface-border-dark w-full max-w-xl"
             >
               <span className="text-xs font-mono uppercase tracking-wider text-text-light-secondary/70 dark:text-text-dark-secondary/70">
-                Redes:
+                {language === 'en' ? 'Socials:' : 'Redes:'}
               </span>
               <div className="flex items-center gap-2">
                 {authorProfile.socialLinks
@@ -199,7 +202,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
                   </div>
                   <div>
                     <p className="text-[11px] font-mono uppercase tracking-wider text-text-light-secondary/80 dark:text-text-dark-secondary/80">
-                      Especialidade
+                      {language === 'en' ? 'Specialty' : language === 'es' ? 'Especialidad' : 'Especialidade'}
                     </p>
                     <p className="text-xs sm:text-sm font-semibold text-text-light-primary dark:text-text-dark-primary">
                       Forward Deployed Engineer & Mobile
