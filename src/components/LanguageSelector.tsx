@@ -17,6 +17,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   const { language, setLanguage, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const currentOption =
     languageOptions.find((opt) => opt.code === language) || languageOptions[0];
@@ -31,6 +32,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsOpen(false);
+        triggerRef.current?.focus();
       }
     };
 
@@ -48,12 +50,14 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   const handleSelect = (code: Language) => {
     setLanguage(code);
     setIsOpen(false);
+    triggerRef.current?.focus();
   };
 
   return (
     <div ref={containerRef} className={`relative inline-block text-left ${className}`}>
       {/* Trigger Button */}
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}

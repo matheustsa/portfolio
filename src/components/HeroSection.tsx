@@ -108,7 +108,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
               className="flex items-center gap-3 pt-4 border-t border-surface-border-light dark:border-surface-border-dark w-full max-w-xl"
             >
               <span className="text-xs font-mono uppercase tracking-wider text-text-light-secondary/70 dark:text-text-dark-secondary/70">
-                {language === 'en' ? 'Socials:' : 'Redes:'}
+                {t.hero.socialsLabel}
               </span>
               <div className="flex items-center gap-2">
                 {authorProfile.socialLinks
@@ -202,7 +202,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
                   </div>
                   <div>
                     <p className="text-[11px] font-mono uppercase tracking-wider text-text-light-secondary/80 dark:text-text-dark-secondary/80">
-                      {language === 'en' ? 'Specialty' : language === 'es' ? 'Especialidad' : 'Especialidade'}
+                      {t.hero.specialtyLabel}
                     </p>
                     <p className="text-xs sm:text-sm font-semibold text-text-light-primary dark:text-text-dark-primary">
                       Forward Deployed Engineer & Mobile

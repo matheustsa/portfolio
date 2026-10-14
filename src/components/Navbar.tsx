@@ -191,7 +191,13 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
                   {item.label}
                 </a>
               ))}
-              <div className="pt-3 border-t border-surface-border-light dark:border-surface-border-dark">
+              <div className="pt-3 border-t border-surface-border-light dark:border-surface-border-dark space-y-3">
+                <div className="flex items-center justify-between px-2 py-1">
+                  <span className="text-sm font-medium text-text-light-secondary dark:text-text-dark-secondary">
+                    {t.languageSelector.selectLanguage}
+                  </span>
+                  <LanguageSelector dropDirection="up" />
+                </div>
                 <a
                   href="#contato"
                   onClick={() => setIsMobileMenuOpen(false)}

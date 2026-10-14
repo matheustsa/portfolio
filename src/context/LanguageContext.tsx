@@ -31,7 +31,12 @@ export interface LanguageProviderProps {
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      let saved: string | null = null;
+      try {
+        saved = localStorage.getItem(STORAGE_KEY);
+      } catch {
+        // Ignore storage access restrictions in private browsing or iframes
+      }
       const navLang = typeof navigator !== 'undefined' ? navigator.language : undefined;
       return resolveInitialLanguage(saved, navLang);
     }
@@ -41,7 +46,11 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   const setLanguage = (newLang: Language) => {
     setLanguageState(newLang);
     if (typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEY, newLang);
+      try {
+        localStorage.setItem(STORAGE_KEY, newLang);
+      } catch {
+        // Ignore storage access restrictions
+      }
       document.documentElement.lang = newLang;
     }
   };

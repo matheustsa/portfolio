@@ -34,6 +34,8 @@ export interface TranslationDictionary {
     contactMe: string;
     locationTooltip: string;
     terminalTitle: string;
+    specialtyLabel: string;
+    socialsLabel: string;
   };
   techStack: {
     badge: string;
@@ -74,11 +76,20 @@ export interface TranslationDictionary {
     emailCopied: string;
     reachOutDirectly: string;
     connectSocial: string;
+    emailTitle: string;
+    emailDesc: string;
+    sendEmail: string;
+    copied: string;
+    linkedinDesc: string;
+    linkedinBtn: string;
+    githubDesc: string;
+    githubBtn: string;
   };
   footer: {
     builtWith: string;
     rights: string;
     backToTop: string;
+    techCredits: string;
   };
   lightbox: {
     imageCounter: string;

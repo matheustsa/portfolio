@@ -41,11 +41,7 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Tech Stack credits */}
           <div className="text-center">
             <p className="text-xs font-mono text-text-light-secondary dark:text-text-dark-secondary">
-              {language === 'en'
-                ? 'Built with React, TypeScript & Tailwind CSS'
-                : language === 'es'
-                ? 'Construido con React, TypeScript y Tailwind CSS'
-                : 'Construído com React, TypeScript & Tailwind CSS'}
+              {t.footer.techCredits}
             </p>
           </div>
 

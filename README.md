@@ -1,6 +1,6 @@
-# TSA Tech Landing Page
+# Portfólio - Matheus "Lekod" Abella
 
-Landing page desenvolvida com React, Vite, TypeScript e Tailwind CSS.
+Portfólio desenvolvido com React, Vite, TypeScript e Tailwind CSS.
 
 ## Executando o Projeto
 
